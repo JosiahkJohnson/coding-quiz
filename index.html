@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coding Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Heading grid layout -->
+    <div class="row">
+        
+        <!-- link to the highscores page -->
+        <div class="col-sm-6">
+            <a href="highscores.html" id="high-score-link">Highscores</a>
+        </div>
+
+        <!-- Timer -->
+        <div class="col-sm-6">
+            <p class="text-md-right timer">Time left: 0 seconds</p>
+        </div>
+    </div>
+</head>
+<body>
+    <!-- Jumbotron containing the intro, and questions -->
+    <div class="jumbotron">
+        
+        <!-- Row containing the question -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="question-text">
+                    <!-- Link the question part of the question object from the array -->
+                </h4>
+
+                <!-- This row will contain the answer choices box -->
+                <div class="row">
+                    <!-- We only need like half of the jumbotron though -->
+                    <div class="col-sm-6">
+                        
+                        <!-- The button group containing... the buttons -->
+                        <div class="btn-group-vertical">
+                            <!-- Imagine A here -->
+                            <!-- Imagine B here -->
+                            <!-- Imagine C here -->
+                            <!-- Imagine D here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- And finally, this row will contain the message if the user was correct or incorrect -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- Decorative line -->
+                        <hr class="feedback-line">
+                        <!-- Contains the text -->
+                        <section class="feedback-box"></section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Jquery link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Javascript link -->
+    <script src="questions.js"></script>
+</body>
+</html>
