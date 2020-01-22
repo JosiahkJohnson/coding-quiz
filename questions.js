@@ -82,5 +82,47 @@ function count(time){
     }, 1000);
 };
 
+//printing function that prints the current function to the screen
+function printQuestion(number){
+    //storing some variables from the html to change
+    //storing important data from the questions object to be used
+    var questionBox = $(".question-text");
+    var answers = quiz1[number].choices;
+
+    //changing the text in the boxes needed
+    //adding buttons/answer choices to boxes needed
+    questionBox.text(quiz1[number].title);
+    createAnswers(answers);
+}
+
+//create answers function creates a number of buttons matching the number of answer choices
+//pass the answers array into this function for it to work correctly
+function createAnswers(answers){
+    //the button group containing the answers
+    var buttonGroup = $(".answers");
+
+    for(i=0; i<answers.length;i++){
+        var choice = $("<button>");
+        choice.addClass("answer-choice");
+        choice.attr("choice", i);
+        choice.text(answers[i]);
+        buttonGroup.append(choice);
+    }
+}
+
+//clear page function should be used between questions to delete the question and answer choices
+function clearPage(){
+    $(".answers").empty();
+    $(".question-text").empty();
+}
+
 var timer = setCountdown(quiz1);
+
+//some function calls to test some things
+printQuestion(1);
 count(timer);
+
+//cheap manual clear page function, remember to remove later.
+$('.timer').on("click", function(){
+    clearPage();
+});
