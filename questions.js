@@ -51,6 +51,8 @@ var quiz1 = [
         answer: "3"
     },
 ];
+var currentQuestion = 0;
+var score = 0;
 
 //This function will create a timer based on how long the quiz array passed inside is.
 function setCountdown(quiz){
@@ -73,7 +75,7 @@ function count(time){
 
         //update the html timer
         $(".timer").text("Time left: " + timeLeft + " seconds.");
-        console.log(timeLeft + " seconds left.");
+        //console.log(timeLeft + " seconds left.");
         
         //To end the timer
         if(timeLeft === 0){
@@ -82,31 +84,94 @@ function count(time){
     }, 1000);
 };
 
+//This start quiz function will contain the main calls that write the questions to the screen
+function startQuiz(quiz){
+    //initilize the timer
+    var timer = setCountdown(quiz);
+    count(timer);
+
+    //if this isn't the first quiz in a session, it will show timer and line again
+    $(".feedback-line").show();
+    $(".timer").show();
+    
+    //print the current question to the screen
+    printQuestion(quiz[currentQuestion], quiz);
+}
+
 //printing function that prints the current function to the screen
-function printQuestion(number){
+function printQuestion(question, quiz){
     //storing some variables from the html to change
     //storing important data from the questions object to be used
     var questionBox = $(".question-text");
-    var answers = quiz1[number].choices;
+    var answers = question.choices;
 
     //changing the text in the boxes needed
     //adding buttons/answer choices to boxes needed
-    questionBox.text(quiz1[number].title);
-    createAnswers(answers);
+    questionBox.text(question.title);
+    createAnswers(answers, quiz);
 }
 
 //create answers function creates a number of buttons matching the number of answer choices
 //pass the answers array into this function for it to work correctly
-function createAnswers(answers){
+function createAnswers(answers, quiz){
     //the button group containing the answers
     var buttonGroup = $(".answers");
 
     for(i=0; i<answers.length;i++){
         var choice = $("<button>");
-        choice.addClass("answer-choice");
-        choice.attr("choice", i);
-        choice.text(answers[i]);
+        choice.addClass("answer-choice btn-info text-left");
+        
+        //the choice attributed to the button
+        choice.attr("data-answer", i);
+        choice.text((i+1) + ". " + answers[i]);
         buttonGroup.append(choice);
+    }
+
+    $(".answer-choice").on("click", function(){
+        console.log("answer clicked");
+    
+        //clear page for next question
+        clearPage();
+
+        //check the answer to the correct one stored in the object
+        checkAnswer($(this).attr("data-answer"), quiz[currentQuestion].answer);
+    
+        //move to the next question if there is a next question, otherwise end the quiz
+        if(currentQuestion < quiz.length - 1){
+            //increment the question number
+            currentQuestion++;
+
+            //console.log(quiz.length);
+            //console.log(currentQuestion);
+            printQuestion(quiz[currentQuestion], quiz);
+        }
+        else{
+            clearPage();
+            //Final score calculation
+            score += timeLeft;
+
+            //print the score page
+            printScorePage();
+
+            //hides the line in the middle of the quiz
+            $(".feedback-line").hide();
+            $(".timer").hide();
+        }
+    });
+}
+
+//function that will check the user answer and see if it is stored in the same index as the correct answer number
+function checkAnswer(click, answer){
+    feedback = $(".feedback");
+    //console.log(click);
+    //console.log(answer);
+    if(click === answer){
+        feedback.text("That answer was correct.");
+        score += 10;
+    }
+    else{
+        feedback.text("That answer was not correct.");
+        timeLeft -= 10;
     }
 }
 
@@ -114,13 +179,21 @@ function createAnswers(answers){
 function clearPage(){
     $(".answers").empty();
     $(".question-text").empty();
+    $(".feedback").empty();
 }
 
-var timer = setCountdown(quiz1);
+//Function to be called at the end to display the final score
+function printScorePage(){
+    $(".question-text").text("Your final score is:");
+    $(".feedback-box").text(score);
+}
+
+//Main call to start the quiz
+startQuiz(quiz1); 
 
 //some function calls to test some things
-printQuestion(1);
-count(timer);
+//printQuestion(1);
+//count(timer);
 
 //cheap manual clear page function, remember to remove later.
 $('.timer').on("click", function(){

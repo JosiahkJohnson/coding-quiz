@@ -16,5 +16,13 @@ Mostly not too intresting, most of the styling comes from bootstrap.
 # questions.js
 Contains the questions. The first, and perhaps only, quiz was provided by Inna Widener via slack. It's basically an array of questions stored in objects. I changed the answer string to be the index number of the correct answer in the answer choice array for comparisons to hopefully be easier.
 
+After the quiz is over, the page clears out and shows the final score.
+
+# score
+Score is determined by number of questions answered correctly, and at the end how much time is left.
+
+# timer
+The timer length depends on how long the quiz is, 15 seconds per question. every incorrect answer subtracts 10 seconds from the time left. Any unused time at the end of the quiz adds to the total score.
+
 # highscores.html
 This page will contain all of the highscores of the differant users, as well as a link back to the index page.
