@@ -30,6 +30,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h4 class="question-text text-center">
+                    Click the "start" button below to start the quiz
                     <!-- Link the question part of the question object from the array -->
                 </h4>
 
@@ -40,6 +41,7 @@
                         
                         <!-- The button group containing... the buttons -->
                         <div class="btn-group-vertical answers">
+                            <button class="btn btn-success start-button">Start</button>
                             <!-- Imagine A here -->
                             <!-- Imagine B here -->
                             <!-- Imagine C here -->
@@ -56,7 +58,7 @@
                             <form class="highscore-form">
                                 <input type="text" class="username">
                                 <br>
-                                <button class="btn btn-secondary submit">submit</button>
+                                <button class="btn btn-secondary submit" onclick="window.location.href = 'highscores.html';">submit</button>
                             </form>
                         </div>
                     </div>
@@ -74,6 +76,7 @@
                     <div class="col-sm-12">
                         <!-- Contains the text -->
                         <section class="feedback-box">
+                            
                             <h5 class="feedback"></h5>
                         </section>
                     </div>

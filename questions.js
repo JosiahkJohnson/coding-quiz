@@ -60,6 +60,20 @@ if(JSON.parse(localStorage.getItem("highScoreNames"))!=null){
     highScoreScores = JSON.parse(localStorage.getItem("highScoreScores"));
 }
 
+//function that will sort the highScore list after being called
+function sortScores(){
+    //basically this function will take the two arrays, sort the scores, and set the index of the other
+    //To print the high score page in order
+    var tempScores = highScoreScores.slice(0);
+    var tempNames = highScoreNames.slice(0);
+
+    highScoreScores.sort(function(a,b){return b-a});
+    for(i=0;i<tempNames.length;i++){
+        //Have to admit, the following line of code gave me a headache, but I got it to work
+        highScoreNames[i] = tempNames[tempScores.indexOf(highScoreScores[i])];
+    }
+}
+
 var currentQuestion = 0;
 var score = 0;
 
@@ -87,8 +101,10 @@ function count(time){
         //console.log(timeLeft + " seconds left.");
         
         //To end the timer
-        if(timeLeft === 0){
+        if(timeLeft === 0 || timeleft < 0){
             clearInterval(timeInterval);
+            clearPage();
+            printScorePage();
         }
     }, 1000);
 };
@@ -96,6 +112,7 @@ function count(time){
 //This start quiz function will contain the main calls that write the questions to the screen
 function startQuiz(quiz){
     //initilize the timer
+    clearPage();
     var timer = setCountdown(quiz);
     count(timer);
 
@@ -169,6 +186,26 @@ function createAnswers(answers, quiz){
     });
 }
 
+//function that will create a new div on the highscores page for each player
+//displaying their name and score
+function createHighScores(){
+    var playersBox = $(".players");
+    var clearButton = $(".clear-button");
+
+    for(i=0;i<highScoreNames.length;i++){
+        var player = $("<div>");
+        player.addClass("highscore-player");
+        player.text(highScoreNames[i] + ": " + highScoreScores[i]);
+        playersBox.append(player);
+    }
+
+    clearButton.on("click", function(event){
+        event.preventDefault();
+        playersBox.empty();
+        localStorage.clear();
+    });
+}
+
 //function that will check the user answer and see if it is stored in the same index as the correct answer number
 function checkAnswer(click, answer){
     feedback = $(".feedback");
@@ -180,7 +217,7 @@ function checkAnswer(click, answer){
     }
     else{
         feedback.text("That answer was not correct.");
-        timeLeft -= 10;
+        timeLeft -= 15;
     }
 }
 
@@ -208,6 +245,10 @@ function printScorePage(){
 
         highScoreNames.push(userName.val());
         highScoreScores.push(score);
+
+        if(highScoreScores.length>1){
+            sortScores();
+        }
         localStorage.setItem("highScoreNames", JSON.stringify(highScoreNames));
         localStorage.setItem("highScoreScores", JSON.stringify(highScoreScores));
     });
@@ -217,7 +258,12 @@ function printScorePage(){
 }
 
 //Main call to start the quiz
-startQuiz(quiz1); 
+$(".start-button").on("click", function(event){
+    event.preventDefault();
+    startQuiz(quiz1);
+});
+//startQuiz(quiz1); 
+createHighScores();
 
 //some function calls to test some things
 //printQuestion(1);
