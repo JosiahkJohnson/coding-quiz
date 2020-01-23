@@ -35,7 +35,7 @@
 
                 <!-- This row will contain the answer choices box -->
                 <div class="row">
-                    <!-- We only need like half of the jumbotron though -->
+                    <!-- We need half of the jumbotron for the answer choices -->
                     <div class="col-sm-6">
                         
                         <!-- The button group containing... the buttons -->
@@ -44,6 +44,20 @@
                             <!-- Imagine B here -->
                             <!-- Imagine C here -->
                             <!-- Imagine D here -->
+                            <!-- The script could probably handle more choices based on how I coded it -->
+                        </div>
+                    </div>
+                    <!-- And the other half for the ending for interacting with the highscores -->
+                    <div class="col-sm-6">
+                        <div hidden class="user-score">
+                            <br>
+                            <h6 class="score-box-title">Add your name to the high score list?</h6>
+                            <!-- form containing the name followed by a button -->
+                            <form class="highscore-form">
+                                <input type="text" class="username">
+                                <br>
+                                <button class="btn btn-secondary submit">submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>

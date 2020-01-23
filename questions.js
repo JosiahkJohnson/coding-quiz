@@ -51,6 +51,15 @@ var quiz1 = [
         answer: "3"
     },
 ];
+var highScoreNames = [];
+var highScoreScores = [];
+
+//get the previously stored high scores if any
+if(JSON.parse(localStorage.getItem("highScoreNames"))!=null){
+    highScoreNames = JSON.parse(localStorage.getItem("highScoreNames"));;
+    highScoreScores = JSON.parse(localStorage.getItem("highScoreScores"));
+}
+
 var currentQuestion = 0;
 var score = 0;
 
@@ -184,8 +193,27 @@ function clearPage(){
 
 //Function to be called at the end to display the final score
 function printScorePage(){
-    $(".question-text").text("Your final score is:");
-    $(".feedback-box").text(score);
+    //variables to point to the top and bottom box on the jumbotron
+    var topBox = $(".question-text");
+    //var bottomBox = $(".feedback-box");
+    $(".user-score").removeAttr("hidden");
+
+    //variables that will handle storing the username and score
+    var userName = $(".username");
+    var submitScore = $(".submit");
+
+    //now the click event handler
+    submitScore.on("click", function(event){
+        event.preventDefault();
+
+        highScoreNames.push(userName.val());
+        highScoreScores.push(score);
+        localStorage.setItem("highScoreNames", JSON.stringify(highScoreNames));
+        localStorage.setItem("highScoreScores", JSON.stringify(highScoreScores));
+    });
+
+    topBox.text("Your final score is: " + score);
+    //bottomBox.text(score);
 }
 
 //Main call to start the quiz
